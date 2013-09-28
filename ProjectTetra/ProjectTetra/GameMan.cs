@@ -89,6 +89,7 @@ double topEdgeDistP;
         private void moveBlock(int bX, int bY, Variables.direction dir)
         {
 
+            level.grid.moveGridSpace(bX, bY, dir, new RegularBlock(game, spriteBatch, bX, bY));
         }
 
         public void setDYDX(int bX, int bY, int dY, int dX)

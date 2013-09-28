@@ -30,6 +30,14 @@ namespace ProjectTetra
             dy = 0; dx = 0;
         }
 
+        public void changeXY(int x, int y)
+        {
+
+            x_base = x * Variables.blockWP;
+            y_base = y * Variables.blockHP;
+            dy=0;
+            dx=0;
+        }
         public override void init()
         {
         }

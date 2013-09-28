@@ -37,7 +37,26 @@ namespace ProjectTetra
             //west
             return isMovableSpace(x - 1, y, -1, 0);
         }
+        public void moveGridSpace(int bX, int bY, Variables.direction dir, Block prevBlock)
+        {
+            Block oldBlock = board[bX, bY];
+            board[bX, bY] = prevBlock; 
+            if (dir == Variables.direction.North)
+            {
+                if (validY(bY+1) && !board[bX,bY+1].isEmpty)
+                {
+                    oldBlock.changeXY(bX, bY + 1);
+                    moveGridSpace(bX, bY + 1,dir, oldBlock);
+                }
+                if (validY(bY + 1) && board[bX, bY + 1].isEmpty)
+                {
+                    oldBlock.changeXY(bX, bY+1);
+                    board[bX, bY + 1] = oldBlock;
+                }
 
+            }
+
+        }
         public bool isMovableSpace(int x, int y, int dx, int dy)
         {
             if (!validX(x))
@@ -118,6 +137,9 @@ namespace ProjectTetra
                     board[i, j] = new RegularBlock(game, spriteBatch, i,j);
                 }
             }
+            ((RegularBlock)(board[0, 1])).wakeUp(new Color(0, 0, 0));
+            ((RegularBlock)(board[0, 0])).wakeUp(new Color(0, 0, 0));
+            ((RegularBlock)(board[0, 2])).wakeUp(new Color(100, 0, 0));
             solid_count = 0;
         }
         public override void draw(GameTime gameTime)
@@ -275,7 +297,7 @@ namespace ProjectTetra
 
         public void spawnBlock()
         {
-            Color random_color = Variables.colors[random.Next(0, 1)];
+            Color random_color = Variables.colors[random.Next(0, 5)];
             int x = random.Next(0, (int) Variables.numBlocksX);
             int y = random.Next(0, (int)Variables.numBlocksY);
             
@@ -286,7 +308,7 @@ namespace ProjectTetra
             {
                 while (sameNeighborColor(random_color, x, y))
                 {
-                    random_color = Variables.colors[random.Next(0, 1)];
+                    random_color = Variables.colors[random.Next(0, 5)];
                 }
                 new_block = new RegularBlock(game, spriteBatch, x, y);
                 new_block.wakeUp(random_color);
