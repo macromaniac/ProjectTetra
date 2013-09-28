@@ -73,21 +73,32 @@ namespace ProjectTetra
                 if (random.Next((int)(Math.Sqrt((double)solid_count) * slow_factor) + spawn_buffer) <= 1)
                     spawnBlock();
             }
+
         }
 
         private void analyzeBlock(Block block, int x, int y)
         {
+            List<Block> blocks = new List<Block>();
             if (sameNeighborColor(block.color, x,y))
             {
-                block.flag();
-                followLine(block, x, y, Variables.direction.North);
-                followLine(block, x, y, Variables.direction.East);
-                followLine(block, x, y, Variables.direction.West);
-                followLine(block, x, y, Variables.direction.South);
+                blocks.Add(block);
+                followLine(blocks, x, y, Variables.direction.North);
+
+                blocks = new List<Block>();
+                blocks.Add(block);
+                followLine(blocks, x, y, Variables.direction.East);
+                
+                blocks = new List<Block>();
+                blocks.Add(block);
+                followLine(blocks, x, y, Variables.direction.West);
+
+                blocks = new List<Block>();
+                blocks.Add(block);
+                followLine(blocks, x, y, Variables.direction.South);
             }
         }
 
-        private void followLine(Block block, int x, int y, Variables.direction direction)
+        private void followLine(List<Block> blocks, int x, int y, Variables.direction direction)
         {
             int new_x = x;
             int new_y = y;
@@ -111,13 +122,20 @@ namespace ProjectTetra
 
             if (isInBound(new_x,new_y))
             {
-                if (board[new_x, new_y].color == block.color)
+                if (board[new_x, new_y].color == blocks[0].color)
                 {
                     //keep moving forward
-                    board[x, y].flag();
-                    followLine(block, new_x, new_y, direction);
+                    blocks.Add(board[new_x, new_y]);
+                    followLine(blocks, new_x, new_y, direction);
                 }
 
+            }
+
+            if (blocks.Count >= 3)
+            {
+                foreach (Block block in blocks){
+                    block.flag();
+                }
             }
 
         }
@@ -189,8 +207,7 @@ namespace ProjectTetra
 
         public void spawnBlock()
         {
-            Debug.WriteLine("In spawnBlock");
-            Color random_color = Variables.colors[random.Next(0, 5)];
+            Color random_color = Variables.colors[random.Next(0, 1)];
             int x = random.Next(0, (int) Variables.numBlocksX);
             int y = random.Next(0, (int)Variables.numBlocksY);
             
@@ -199,17 +216,14 @@ namespace ProjectTetra
 
             if (board[x, y].isEmpty)
             {
-                Debug.WriteLine("Got Empty Spot");
                 while (sameNeighborColor(random_color, x, y))
                 {
-                    random_color = Variables.colors[random.Next(0, 5)];
+                    random_color = Variables.colors[random.Next(0, 1)];
                 }
-                Debug.WriteLine("Good Color");
                 new_block = new RegularBlock(game, spriteBatch, x, y);
                 new_block.wakeUp(random_color);
                 board[x, y] = new_block;
                 solid_count++;
-                Debug.WriteLine(solid_count);
             }
             else if (solid_count >= Variables.numBlocksX * Variables.numBlocksY)
             {
