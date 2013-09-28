@@ -24,7 +24,7 @@ namespace ProjectTetra
 
         bool stop = false;
         int slow_factor = 10;
-        int spawn_buffer = 160;
+        int spawn_buffer =50;
 
         public bool isMovableSpace(int x, int y, Variables.direction dir)
         {
@@ -40,15 +40,59 @@ namespace ProjectTetra
 
         public bool isMovableSpace(int x, int y, int dx, int dy)
         {
-            if (x >= board.GetLength(0) || x < 0)
+            if (!validX(x))
                 return false;
-            if (y >= board.GetLength(1) || y < 0)
+            if (!validY(y))
                 return false;
             if (board[x, y].isEmpty)
                 return true;
             return isMovableSpace(x + dx, y + dy, dx, dy);
         }
 
+        public bool validX(int x)
+        {
+            if (x >= board.GetLength(0) || x < 0)
+                return false;
+            return true;
+        }
+        public bool validY(int y)
+        {
+            if (y >= board.GetLength(1) || y < 0)
+                return false;
+            return true;
+        }
+        //dx is actually dy because of the screen ><
+        public void moveSpace(int x, int y, int dx, int dy)
+        {
+            if (board[x, y].isEmpty)
+                return;
+            board[x, y].setDX(dx);
+            board[x, y].setDY(dy);
+            if (dy > 0)
+            {
+                if (!validX(x+1))
+                    return;
+                moveSpace(x + 1, y, dx, dy);
+            }
+            if (dy < 0)
+            {
+                if (!validX(x-1))
+                    return;
+                moveSpace(x - 1, y, dx, dy);
+            }
+            if (dx > 0)
+            {
+                if (!validY(y + 1))
+                    return;
+                moveSpace(x, y + 1, dx, dy);
+            }
+            if (dx < 0)
+            {
+                if (!validY(y - 1))
+                    return;
+                moveSpace(x, y - 1, dx, dy);
+            }
+        }
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
 
