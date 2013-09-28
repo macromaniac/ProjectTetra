@@ -7,6 +7,7 @@ namespace ProjectTetra
 {
     public static class Variables
     {
+        public static enum direction {North, East, South, West};
         public static double gridStartX = .2;
         public static double blockW = .25;
         public static double blockH = .15;

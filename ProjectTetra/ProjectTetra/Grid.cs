@@ -63,8 +63,64 @@ namespace ProjectTetra
         {
         }
 
+        public void analyzeBlock(Block block, int x, int y)
+        {
+            followLine(block, x, y, Variables.direction.North);
+            followLine(block, x, y, Variables.direction.East);
+            followLine(block, x, y, Variables.direction.West);
+            followLine(block, x, y, Variables.direction.South);
+        }
+
+        public void followLine(Block block, int x, int y, Variables.direction direction)
+        {
+            int new_x = x;
+            int new_y = y;
+
+            if (direction == Variables.direction.North)
+            {
+                new_y++;
+            }
+            if (direction == Variables.direction.West)
+            {
+                new_x--;
+            }
+            if (direction == Variables.direction.South)
+            {
+                new_y--;
+            }
+            if (direction == Variables.direction.East)
+            {
+                new_x++;
+            }
+
+            if ((x >= 0) && (x < Variables.numBlocksX) && (y >= 0) && (y < Variables.numBlocksY))
+            {
+                if (board[x, y].color == block.color)
+                {
+                    //keep moving forward
+                    block.flag();
+                    board[x, y].flag();
+                    followLine(block, new_x, new_y, direction);
+                }
+
+            }
+
+        }
+
         public void checkBlocks()
         {
+            Block block;
+            for (int x = 0; x < Variables.numBlocksX; ++x)
+            {
+                for (int y = 0; y < Variables.numBlocksY; ++y)
+                {
+                    block = board[x,y];
+                    if (!block.isEmpty)
+                    {
+                        analyzeBlock(block, x, y);
+                    }
+                }
+            }
         }
     }
 }
