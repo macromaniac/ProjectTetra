@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -16,10 +17,13 @@ namespace ProjectTetra
     class Grid : Drawer
     {
         Texture2D t2d;
-
         public Block[,] board = new Block[4, 6];
+        List<BoardAddress> free_cells = new List<BoardAddress>();
+        
         int solid_count;
         Random random = new Random();
+
+        bool stop = false;
 
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
@@ -46,8 +50,6 @@ namespace ProjectTetra
                 }
             }
             solid_count = 0;
-            ((RegularBlock)(board[1, 1])).wakeUp( new Color(0,0,0));
-            ((RegularBlock)(board[1, 2])).wakeUp( new Color(100,0,0));
         }
         public override void draw(GameTime gameTime)
         {
@@ -62,16 +64,22 @@ namespace ProjectTetra
                     board[x, y].draw(gameTime);
                 }
         }
+
         public override void update(GameTime gameTime)
         {
+            if (!stop) spawnBlock();
         }
 
         private void analyzeBlock(Block block, int x, int y)
         {
-            followLine(block, x, y, Variables.direction.North);
-            followLine(block, x, y, Variables.direction.East);
-            followLine(block, x, y, Variables.direction.West);
-            followLine(block, x, y, Variables.direction.South);
+            if (sameNeighborColor(block.color, x,y))
+            {
+                block.flag();
+                followLine(block, x, y, Variables.direction.North);
+                followLine(block, x, y, Variables.direction.East);
+                followLine(block, x, y, Variables.direction.West);
+                followLine(block, x, y, Variables.direction.South);
+            }
         }
 
         private void followLine(Block block, int x, int y, Variables.direction direction)
@@ -96,12 +104,11 @@ namespace ProjectTetra
                 new_x++;
             }
 
-            if ((x >= 0) && (x < Variables.numBlocksX) && (y >= 0) && (y < Variables.numBlocksY))
+            if (isInBound(new_x,new_y))
             {
-                if (board[x, y].color == block.color)
+                if (board[new_x, new_y].color == block.color)
                 {
                     //keep moving forward
-                    block.flag();
                     board[x, y].flag();
                     followLine(block, new_x, new_y, direction);
                 }
@@ -166,7 +173,7 @@ namespace ProjectTetra
             {
                 for (int j = -1; j <= 1; ++j)
                 {
-                    if (safeGetBlock(x+i, y+j).color == color && i != 0 || j != 0)
+                    if (safeGetBlock(x+i, y+j).color == color && (i != 0 ) && ((i == 0) || (j == 0)))
                     {
                         return true;
                     }
@@ -177,20 +184,34 @@ namespace ProjectTetra
 
         public void spawnBlock()
         {
-            Color random_color = Variables.colors[random.Next(0, 4)];
+            Debug.WriteLine("In spawnBlock");
+            Color random_color = Variables.colors[random.Next(0, 5)];
             int x = random.Next(0, (int) Variables.numBlocksX);
             int y = random.Next(0, (int)Variables.numBlocksY);
+            
+            RegularBlock new_block;
 
-            if (board[x, y].isEmpty && !sameNeighborColor(random_color,x,y))
+
+            if (board[x, y].isEmpty)
             {
-                board[x, y].create(random_color);
+                Debug.WriteLine("Got Empty Spot");
+                while (sameNeighborColor(random_color, x, y))
+                {
+                    random_color = Variables.colors[random.Next(0, 5)];
+                }
+                Debug.WriteLine("Good Color");
+                new_block = new RegularBlock(game, spriteBatch, x, y);
+                new_block.wakeUp(random_color);
+                board[x, y] = new_block;
                 solid_count++;
+                Debug.WriteLine(solid_count);
             }
             if (solid_count >= Variables.numBlocksX * Variables.numBlocksY)
             {
                 //TODO: Declare End of Game, map is full!
+                stop = true;
             }
-            else
+            else 
             {
                 //Try again until a proper spawn is found.
                 spawnBlock();
