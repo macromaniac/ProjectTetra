@@ -27,7 +27,7 @@ namespace ProjectTetra
         public override void init()
         {
             grid = new Grid(game, spriteBatch);
-            life = 3000;
+            life = 2000;
             points = 0;
         }
         public override void draw(GameTime gameTime)

@@ -124,8 +124,17 @@ namespace ProjectTetra
         //dx is actually dy because of the screen ><
         public void moveSpace(int x, int y, int dx, int dy)
         {
-            if (board[x, y].isEmpty)
+            try
+            {
+
+                if (board[x, y].isEmpty)
+                    return;
+
+            }
+            catch (Exception e)
+            {
                 return;
+            }
             board[x, y].setDX(dx);
             board[x, y].setDY(dy);
             if (dy > 0)
@@ -284,7 +293,7 @@ namespace ProjectTetra
                     }
                 }
             }
-            return pointGather()*500;
+            return pointGather()*200;
         }
 
         //Returns the deserved points and destroys flagged blocks
