@@ -10,29 +10,28 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-
-namespace ProjectTetra 
+namespace ProjectTetra
 {
-    class Menu : Drawer
+    class Block:Drawer
     {
-
-        public UI ui;
-        public Menu(Game game, SpriteBatch spriteBatch):base(game,spriteBatch)
+        Texture2D t2d;
+        double x, y;
+        public Block(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
+            x = 10; y = 10;
+            t2d = game.Content.Load<Texture2D>("blackpixel");
 
         }
         public override void init()
         {
-            ui = new UI(game, spriteBatch);
         }
         public override void draw(GameTime gameTime)
         {
-            ui.draw(gameTime);
+            spriteBatch.Draw(t2d, new Rectangle( (int) x, (int)y, 100, 100), Color.Beige);
         }
         public override void update(GameTime gameTime)
         {
-            ui.update(gameTime);
+            y += gameTime.ElapsedGameTime.TotalMilliseconds * .04;
         }
-
     }
 }

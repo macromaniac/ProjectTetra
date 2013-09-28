@@ -13,25 +13,27 @@ using Microsoft.Xna.Framework.Media;
 
 namespace ProjectTetra
 {
-    abstract class Drawer
+    class GameMan:Drawer
     {
-        protected Game game;
-        protected SpriteBatch spriteBatch;
-        public Drawer(Game game, SpriteBatch spriteBatch)
-        {
+        public Level level;
 
-            this.game = game;
-            this.spriteBatch = spriteBatch;
-            init();
-        }
-        public abstract void init();
-        public virtual void draw(GameTime gameTime)
+        public GameMan(Game game, SpriteBatch spriteBatch)
+            : base(game, spriteBatch)
         {
 
         }
-        public virtual void update(GameTime gameTime)
+        public override void init()
         {
-
+            level = new Level(game, spriteBatch);
         }
+        public override void draw(GameTime gameTime)
+        {
+            level.draw(gameTime);
+        }
+        public override void update(GameTime gameTime)
+        {
+            level.update(gameTime);
+        }
+
     }
 }

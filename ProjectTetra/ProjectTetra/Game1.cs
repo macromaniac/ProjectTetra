@@ -51,7 +51,7 @@ namespace ProjectTetra
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            menu.update(gameTime);
             base.Update(gameTime);
         }
 

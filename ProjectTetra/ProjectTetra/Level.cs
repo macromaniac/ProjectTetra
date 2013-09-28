@@ -10,28 +10,28 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
-
 namespace ProjectTetra
 {
-    abstract class Drawer
+    class Level:Drawer
     {
-        protected Game game;
-        protected SpriteBatch spriteBatch;
-        public Drawer(Game game, SpriteBatch spriteBatch)
-        {
+        public Block block;
 
-            this.game = game;
-            this.spriteBatch = spriteBatch;
-            init();
-        }
-        public abstract void init();
-        public virtual void draw(GameTime gameTime)
+        public Level(Game game, SpriteBatch spriteBatch)
+            : base(game, spriteBatch)
         {
 
         }
-        public virtual void update(GameTime gameTime)
+        public override void init()
         {
-
+            block = new Block(game,spriteBatch);
+        }
+        public override void draw(GameTime gameTime)
+        {
+            block.draw(gameTime);
+        }
+        public override void update(GameTime gameTime)
+        {
+            block.update(gameTime);
         }
     }
 }
