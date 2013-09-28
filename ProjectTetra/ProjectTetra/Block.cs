@@ -52,13 +52,6 @@ namespace ProjectTetra
             color = new Color(0, 0, 0);
         }
 
-        public void create(Color color)
-        {
-            flagged = false;
-            isEmpty = false;
-            this.color = color;
-        }
-
         public void setDX(int dx)
         {
             

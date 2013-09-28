@@ -37,6 +37,7 @@ namespace ProjectTetra
         public void wakeUp(Color toSet)
         {
             isEmpty = false;
+            color = toSet;
         }
 
     }
