@@ -17,7 +17,6 @@ namespace ProjectTetra
         public Texture2D t2d;
         public Color color;
         public bool isEmpty;
-        public bool flagged;
         public int dx, dy;
         public double x_base, y_base;
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
@@ -25,8 +24,8 @@ namespace ProjectTetra
             t2d = game.Content.Load<Texture2D>("blackpixel");
             isEmpty = true;
             color = new Color(0, 0, 0);
-            x_base = x * Variables.blockW;
-            y_base = y * Variables.blockH;
+            x_base = x * Variables.blockWP;
+            y_base = y * Variables.blockHP;
             dy = 0; dx = 0;
         }
         public override void init()

@@ -25,12 +25,18 @@ namespace ProjectTetra
         }
         public override void draw(GameTime gameTime)
         {
-            spriteBatch.Draw(t2d, 
-                new Rectangle( ((int) ( Variables.getX(x_base) + dy)), ((int)(Variables.getY(y_base) +dx)),
-                Variables.blockHP, Variables.blockWP), color);
+            if(!isEmpty)
+                spriteBatch.Draw(t2d, 
+                    new Rectangle( ((int) ( y_base + dy)), ((int)(x_base +dx)),
+                    Variables.blockHP, Variables.blockWP), color);
+
         }
         public override void update(GameTime gameTime)
         {
+        }
+        public void wakeUp(Color toSet)
+        {
+            isEmpty = false;
         }
 
     }
