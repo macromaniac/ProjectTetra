@@ -120,6 +120,7 @@ namespace ProjectTetra
             }
             solid_count = 0;
         }
+
         public override void draw(GameTime gameTime)
         {
             for (int x = 0; x < Variables.numBlocksX; ++x)
@@ -265,8 +266,9 @@ namespace ProjectTetra
             {
                 for (int j = -1; j <= 1; ++j)
                 {
-                    if (safeGetBlock(x+i, y+j).color == color && (i != 0 ) && ((i == 0) || (j == 0)))
+                    if (safeGetBlock(x+i, y+j).color == color && (i != j ) && ((i == 0) || (j == 0)))
                     {
+                        Debug.WriteLine(color);
                         return true;
                     }
                 }
