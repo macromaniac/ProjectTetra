@@ -24,8 +24,8 @@ namespace ProjectTetra
             t2d = game.Content.Load<Texture2D>("blackpixel");
             isEmpty = true;
             color = new Color(0, 0, 0);
-            x_base = x * Variables.blockW;
-            y_base = y * Variables.blockH;
+            x_base = x * Variables.blockWP;
+            y_base = y * Variables.blockHP;
             dy = 0; dx = 0;
         }
         public override void init()
