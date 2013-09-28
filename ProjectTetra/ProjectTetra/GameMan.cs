@@ -18,7 +18,7 @@ namespace ProjectTetra
         public Level level;
         bool isTouched;
         int xbase, ybase;
-
+        int xbBase, ybBase;
         public GameMan(Game game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
@@ -44,18 +44,21 @@ namespace ProjectTetra
                 double touchX = tc[0].Position.X;
                 double touchY = tc[0].Position.Y;
 
-                int touchXB = (int)(touchX / Variables.blockWP);
-                int touchYB = (int)(touchY / Variables.blockHP);
+                int touchXB = (int)(touchY / Variables.blockWP);
+                int touchYB = (int)(touchX / Variables.blockHP);
 
                 if (isTouched == false)
                 {
                     xbase = (int)touchX;
                     ybase = (int)touchY;
+                    xbBase = touchXB;
+                    ybBase = touchYB;
                     isTouched = true;
                 }
-                if ( touchYB< (Variables.numBlocksY-1) && touchXB<(Variables.numBlocksX-1))
+                if ( touchYB< (Variables.numBlocksY) && touchXB<(Variables.numBlocksX))
                 {
-                    level.grid.board[touchXB, touchYB].setDX(100);
+                    level.grid.board[xbBase, ybBase].setDX((int)(touchX-xbase));
+                    level.grid.board[xbBase, ybBase].setDY((int)(touchY-ybase));
                 }
             }
             else

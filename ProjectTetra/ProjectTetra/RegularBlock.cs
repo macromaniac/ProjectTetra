@@ -27,7 +27,7 @@ namespace ProjectTetra
         {
             if(!isEmpty)
                 spriteBatch.Draw(t2d, 
-                    new Rectangle( ((int) ( y_base + dy)), ((int)(x_base +dx)),
+                    new Rectangle( ((int) ( y_base + dx)), ((int)(x_base +dy)),
                     Variables.blockHP, Variables.blockWP), color);
 
         }

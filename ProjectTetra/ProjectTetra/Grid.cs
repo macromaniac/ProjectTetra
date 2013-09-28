@@ -44,6 +44,7 @@ namespace ProjectTetra
                 }
             }
             ((RegularBlock)(board[1, 1])).wakeUp( new Color(0,0,0));
+            ((RegularBlock)(board[1, 2])).wakeUp( new Color(100,0,0));
 
         }
         public override void draw(GameTime gameTime)
