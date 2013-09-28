@@ -90,6 +90,11 @@ double topEdgeDistP;
         {
 
         }
+
+        public void setDYDX(int bX, int bY, int dY, int dX)
+        {
+
+        }
         private bool setPos(int curY, int curX, int bX, int bY)
         {
             bool didMove = false;
@@ -110,8 +115,9 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY(0);
-                    level.grid.board[bX, bY].setDX(  (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)));
+                    level.grid.moveSpace(bX,bY, (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)), 0);
+                   // level.grid.board[bX, bY].setDY(0);
+                    //level.grid.board[bX, bY].setDX(  (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.South)
@@ -128,8 +134,9 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY(0);
-                    level.grid.board[bX, bY].setDX(-(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)));
+                    level.grid.moveSpace(bX, bY, -(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)), 0);
+                    //level.grid.board[bX, bY].setDY(0);
+                    //level.grid.board[bX, bY].setDX(-(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.East)
@@ -146,8 +153,9 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
-                    level.grid.board[bX, bY].setDX(0);
+                    level.grid.moveSpace(bX, bY, 0, (int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
+                    //level.grid.board[bX, bY].setDY((int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
+                    //level.grid.board[bX, bY].setDX(0);
                 }
             }
 
@@ -166,8 +174,9 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
-                    level.grid.board[bX, bY].setDX(0);
+                    level.grid.moveSpace(bX, bY, 0, (int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
+                    //level.grid.board[bX, bY].setDY((int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
+                    //level.grid.board[bX, bY].setDX(0);
                 }
             }
 
