@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTetra", "ProjectTetra\ProjectTetra\ProjectTetra.csproj", "{EB6DDA55-286A-455C-B42F-E95399167B5E}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ProjectTetraContent", "ProjectTetra\ProjectTetraContent\ProjectTetraContent.contentproj", "{A3D4B7C4-300A-4667-A4A3-FE2FD1B919DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{EB6DDA55-286A-455C-B42F-E95399167B5E}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{A3D4B7C4-300A-4667-A4A3-FE2FD1B919DE}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{A3D4B7C4-300A-4667-A4A3-FE2FD1B919DE}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
