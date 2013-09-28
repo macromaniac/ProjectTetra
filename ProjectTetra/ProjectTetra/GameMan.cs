@@ -96,6 +96,23 @@ namespace ProjectTetra
         {
 
         }
+        private void resetBase()
+        {
+            TouchCollection tc = TouchPanel.GetState();
+                if (tc.Count > 0)
+                {
+                    xbase = (int)tc[0].Position.X;
+                    ybase = (int)tc[0].Position.Y;
+
+                double touchX = tc[0].Position.X;
+                double touchY = tc[0].Position.Y;
+
+                    xbBase = (int)(touchY / Variables.blockWP);
+                    ybBase = (int)(touchX / Variables.blockHP);
+
+                    level.grid.resetGridDXY();
+                }
+        }
         private bool setPos(int curY, int curX, int bX, int bY)
         {
             bool didMove = false;
@@ -112,6 +129,7 @@ namespace ProjectTetra
                     //ybBase = bY + 1;
                     //xbase = curX;
                     //ybase = curY;
+                    resetBase();
                     didMove = true;
                 }
                 else
@@ -130,6 +148,7 @@ namespace ProjectTetra
                     //ybBase = bY - 1;
                     //xbase = curX;
                     //ybase = curY;
+                    resetBase();
                     didMove = true;
 
                 }
@@ -149,6 +168,7 @@ namespace ProjectTetra
                     //xbBase = bX - 1;
                     //xbase = curX;
                     //ybase = curY;
+                    resetBase();
                     didMove = true;
 
                 }
@@ -170,6 +190,7 @@ namespace ProjectTetra
                     //xbBase = bX - 1;
                     //xbase = curX;
                     //ybase = curY;
+                    resetBase();
                     didMove = true;
 
                 }
