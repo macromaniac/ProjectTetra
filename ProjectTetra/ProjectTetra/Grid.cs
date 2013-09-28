@@ -178,7 +178,7 @@ namespace ProjectTetra
                     }
                 }
             }
-            return pointGather();
+            return pointGather()*500;
         }
 
         //Returns the deserved points and destroys flagged blocks
@@ -199,6 +199,7 @@ namespace ProjectTetra
                 }
             }
             solid_count -= broken;
+            if (broken == 0) return 0;
             return (int) Math.Pow(2.0, broken);
         }
 
@@ -231,18 +232,17 @@ namespace ProjectTetra
 
         public void spawnBlock()
         {
-            Color random_color = Variables.colors[random.Next(0, 1)];
+            Color random_color = Variables.colors[random.Next(0, 5)];
             int x = random.Next(0, (int) Variables.numBlocksX);
             int y = random.Next(0, (int)Variables.numBlocksY);
             
             RegularBlock new_block;
 
-
             if (board[x, y].isEmpty)
             {
                 while (sameNeighborColor(random_color, x, y))
                 {
-                    random_color = Variables.colors[random.Next(0, 1)];
+                    random_color = Variables.colors[random.Next(0, 5)];
                 }
                 new_block = new RegularBlock(game, spriteBatch, x, y);
                 new_block.wakeUp(random_color);
