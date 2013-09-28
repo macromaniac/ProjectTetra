@@ -35,10 +35,6 @@ namespace ProjectTetra
         public override void update(GameTime gameTime)
         {
             grid.update(gameTime);
-        }
-
-        public void checkBoard()
-        {
             points += grid.checkBlocks();
         }
     }
