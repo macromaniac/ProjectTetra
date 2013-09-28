@@ -17,6 +17,7 @@ namespace ProjectTetra
         public Texture2D t2d;
         public Color color;
         public bool isEmpty;
+        public bool flagged;
         public int dx, dy;
         public double x_base, y_base;
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
@@ -47,6 +48,7 @@ namespace ProjectTetra
         {
             //TODO
         }
+
 
         public void setDX(int dx)
         {

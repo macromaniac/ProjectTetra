@@ -109,5 +109,25 @@ namespace ProjectTetra
                 }
             }
         }
+
+        //Returns the deserved points and destroys flagged blocks
+        public int pointGather()
+        {
+            Block block;
+            double broken = 0.0;
+            for (int x = 0; x < Variables.numBlocksX; ++x)
+            {
+                for (int y = 0; y < Variables.numBlocksY; ++y)
+                {
+                    block = board[x, y];
+                    if (block.flagged)
+                    {
+                        block.destroy();
+                        broken++;
+                    }
+                }
+            }
+            return (int) Math.Pow(2.0, broken);
+        }
     }
 }
