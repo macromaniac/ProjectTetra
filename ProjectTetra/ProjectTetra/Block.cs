@@ -23,9 +23,7 @@ namespace ProjectTetra
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
         {
             t2d = game.Content.Load<Texture2D>("blackpixel");
-            flagged = false;
-            isEmpty = true;
-            color = new Color(0, 0, 0);
+            reset();
             x_base = x * Variables.blockWP;
             y_base = y * Variables.blockHP;
             dy = 0; dx = 0;
@@ -42,14 +40,15 @@ namespace ProjectTetra
 
         public void flag()
         {
-            //TODO
+            flagged = true;
         }
 
-        public void destroy()
+        public void reset()
         {
-            //TODO
+            flagged = false;
+            isEmpty = true;
+            color = new Color(0, 0, 0);
         }
-
 
         public void setDX(int dx)
         {

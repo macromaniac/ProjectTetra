@@ -135,7 +135,7 @@ namespace ProjectTetra
                     block = board[x, y];
                     if (block.flagged)
                     {
-                        block.destroy();
+                        block.reset();
                         broken++;
                     }
                 }
