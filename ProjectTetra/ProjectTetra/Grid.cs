@@ -309,6 +309,7 @@ namespace ProjectTetra
                     if (block.flagged)
                     {
                         block.reset();
+                        block.isDying = true;
                         broken++;
                     }
                 }

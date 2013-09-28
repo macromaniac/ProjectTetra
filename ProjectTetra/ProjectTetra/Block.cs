@@ -20,6 +20,7 @@ namespace ProjectTetra
         public int dx, dy;
         public double x_base, y_base;
         public bool flagged;
+        public bool isDying;
 
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
         {
@@ -28,6 +29,7 @@ namespace ProjectTetra
             x_base = x * Variables.blockWP;
             y_base = y * Variables.blockHP;
             dy = 0; dx = 0;
+            isDying = false;
         }
 
         public void changeXY(int x, int y)
@@ -53,7 +55,7 @@ namespace ProjectTetra
             flagged = true;
         }
 
-        public void reset()
+        public virtual void reset()
         {
             flagged = false;
             isEmpty = true;
