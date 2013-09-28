@@ -88,7 +88,7 @@ namespace ProjectTetra
         }
         private void moveBlock(int bX, int bY, Variables.direction dir)
         {
-
+            if (!level.grid.getStop())
             level.grid.moveGridSpace(bX, bY, dir, new RegularBlock(game, spriteBatch, bX, bY));
         }
 
@@ -229,7 +229,6 @@ namespace ProjectTetra
                    // level.grid.board[xbBase, ybBase].setDX((int)(touchX-xbase));
                    // level.grid.board[xbBase, ybBase].setDY((int)(touchY-ybase));
                 }
-                int num = 0;
                 setPos((int)touchX, (int)touchY, xbBase, ybBase);
             }
             else
