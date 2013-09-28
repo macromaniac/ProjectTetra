@@ -15,6 +15,8 @@ namespace ProjectTetra
     class Level:Drawer
     {
         public Grid grid;
+        public int points;
+
         public Level(Game game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
@@ -22,8 +24,8 @@ namespace ProjectTetra
         }
         public override void init()
         {
-            //this was originally  just for testing, we don't need this anymore
             grid = new Grid(game, spriteBatch);
+            points = 0;
         }
         public override void draw(GameTime gameTime)
         {
@@ -33,6 +35,11 @@ namespace ProjectTetra
         public override void update(GameTime gameTime)
         {
             grid.update(gameTime);
+        }
+
+        public void checkBoard()
+        {
+            points += grid.checkBlocks();
         }
     }
 }

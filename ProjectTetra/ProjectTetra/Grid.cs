@@ -63,7 +63,7 @@ namespace ProjectTetra
         {
         }
 
-        public void analyzeBlock(Block block, int x, int y)
+        private void analyzeBlock(Block block, int x, int y)
         {
             followLine(block, x, y, Variables.direction.North);
             followLine(block, x, y, Variables.direction.East);
@@ -71,7 +71,7 @@ namespace ProjectTetra
             followLine(block, x, y, Variables.direction.South);
         }
 
-        public void followLine(Block block, int x, int y, Variables.direction direction)
+        private void followLine(Block block, int x, int y, Variables.direction direction)
         {
             int new_x = x;
             int new_y = y;
@@ -107,7 +107,7 @@ namespace ProjectTetra
 
         }
 
-        public void checkBlocks()
+        public int checkBlocks()
         {
             Block block;
             for (int x = 0; x < Variables.numBlocksX; ++x)
@@ -121,10 +121,11 @@ namespace ProjectTetra
                     }
                 }
             }
+            return pointGather();
         }
 
         //Returns the deserved points and destroys flagged blocks
-        public int pointGather()
+        private int pointGather()
         {
             Block block;
             double broken = 0.0;
