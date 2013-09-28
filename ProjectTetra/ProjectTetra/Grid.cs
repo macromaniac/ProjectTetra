@@ -29,7 +29,7 @@ namespace ProjectTetra
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    board[i, j] = new Block(game, spriteBatch);
+                    board[i, j] = new Block(game, spriteBatch, i,j);
                 }
             }
         }

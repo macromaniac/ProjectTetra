@@ -49,7 +49,6 @@ namespace ProjectTetra
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
             // TODO: Add your update logic here
             menu.update(gameTime);
             base.Update(gameTime);

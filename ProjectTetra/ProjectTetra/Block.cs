@@ -14,24 +14,36 @@ namespace ProjectTetra
 {
     class Block:Drawer
     {
-        Texture2D t2d;
-        double x, y;
-        public Block(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
+        public Texture2D t2d;
+        public Color color;
+        public bool isEmpty;
+        public int dx, dy;
+        public double x_base, y_base;
+        public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
         {
-            x = 10; y = 10;
             t2d = game.Content.Load<Texture2D>("blackpixel");
-
+            isEmpty = true;
+            color = new Color(0, 0, 0);
+            x_base = x * Variables.blockW;
+            y_base = y * Variables.blockH;
+            dy = 0; dx = 0;
         }
         public override void init()
         {
         }
         public override void draw(GameTime gameTime)
         {
-            spriteBatch.Draw(t2d, new Rectangle( (int) x, (int)y, 100, 100), Color.Beige);
         }
         public override void update(GameTime gameTime)
         {
-            y += gameTime.ElapsedGameTime.TotalMilliseconds * .04;
+        }
+        public void setDX(int dx)
+        {
+            this.dx = dx;
+        }
+        public void setDY(int dy)
+        {
+            this.dy = dy;
         }
     }
 }
