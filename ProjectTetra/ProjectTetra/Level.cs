@@ -15,7 +15,7 @@ namespace ProjectTetra
     class Level:Drawer
     {
         public Block block;
-
+        public Grid grid;
         public Level(Game game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
@@ -24,13 +24,17 @@ namespace ProjectTetra
         public override void init()
         {
             block = new Block(game,spriteBatch);
+            grid = new Grid(game, spriteBatch);
         }
         public override void draw(GameTime gameTime)
         {
+            grid.draw(gameTime);
             block.draw(gameTime);
+
         }
         public override void update(GameTime gameTime)
         {
+            grid.update(gameTime);
             block.update(gameTime);
         }
     }
