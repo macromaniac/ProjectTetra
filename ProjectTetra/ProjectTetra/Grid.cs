@@ -18,12 +18,13 @@ namespace ProjectTetra
     {
         Texture2D t2d;
         public Block[,] board = new Block[4, 6];
-        List<BoardAddress> free_cells = new List<BoardAddress>();
         
         int solid_count;
         Random random = new Random();
 
         bool stop = false;
+        int slow_factor = 10;
+        int spawn_buffer = 160;
 
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
@@ -67,7 +68,11 @@ namespace ProjectTetra
 
         public override void update(GameTime gameTime)
         {
-            if (!stop) spawnBlock();
+            if (!stop)
+            {
+                if (random.Next((int)(Math.Sqrt((double)solid_count) * slow_factor) + spawn_buffer) <= 1)
+                    spawnBlock();
+            }
         }
 
         private void analyzeBlock(Block block, int x, int y)
@@ -206,7 +211,7 @@ namespace ProjectTetra
                 solid_count++;
                 Debug.WriteLine(solid_count);
             }
-            if (solid_count >= Variables.numBlocksX * Variables.numBlocksY)
+            else if (solid_count >= Variables.numBlocksX * Variables.numBlocksY)
             {
                 //TODO: Declare End of Game, map is full!
                 stop = true;
