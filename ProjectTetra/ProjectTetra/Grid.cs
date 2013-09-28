@@ -39,7 +39,16 @@ namespace ProjectTetra
         }
         public void moveGridSpace(int bX, int bY, Variables.direction dir, Block prevBlock)
         {
-            Block oldBlock = board[bX, bY];
+            Block oldBlock;
+            try
+            {
+                oldBlock = board[bX, bY];
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+            
             board[bX, bY] = prevBlock; 
             if (dir == Variables.direction.North)
             {
@@ -293,7 +302,7 @@ namespace ProjectTetra
                     }
                 }
             }
-            return pointGather()*200;
+            return pointGather()*170;
         }
 
         //Returns the deserved points and destroys flagged blocks
@@ -369,6 +378,7 @@ namespace ProjectTetra
             {
                 //TODO: Declare End of Game, map is full!
                 stop = true;
+                clearBoard();
             }
             else 
             {
@@ -376,15 +386,33 @@ namespace ProjectTetra
                 spawnBlock();
             }
         }
+
+        public void levelUp(int level)
+        {
+            if (slow_factor > 1) slow_factor--;
+            if (spawn_buffer > 60) spawn_buffer -= (25-level);
+        }
         
         public void die()
         {
             stop = true;
+            clearBoard();
         }
 
         public bool getStop()
         {
             return stop;
+        }
+
+        public void clearBoard()
+        {
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    board[i, j] = new RegularBlock(game, spriteBatch, i, j);
+                }
+            }
         }
 
     }
