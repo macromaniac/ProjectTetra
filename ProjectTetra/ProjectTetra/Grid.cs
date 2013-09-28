@@ -16,12 +16,22 @@ namespace ProjectTetra
     class Grid : Drawer
     {
         Texture2D t2d;
+
+        Block[,] board = new Block[4, 6];
+
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
         }
         public override void init()
         {
             t2d = game.Content.Load<Texture2D>("blackpixel");
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    board[i, j] = new Block(game, spriteBatch);
+                }
+            }
         }
         public override void draw(GameTime gameTime)
         {
@@ -37,6 +47,10 @@ namespace ProjectTetra
 
         }
         public override void update(GameTime gameTime)
+        {
+        }
+
+        public void checkBlocks()
         {
         }
     }
