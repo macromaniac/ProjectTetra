@@ -37,6 +37,17 @@ namespace ProjectTetra
         public override void update(GameTime gameTime)
         {
         }
+
+        public void flag()
+        {
+            //TODO
+        }
+
+        public void destroy()
+        {
+            //TODO
+        }
+
         public void setDX(int dx)
         {
             this.dx = dx;
