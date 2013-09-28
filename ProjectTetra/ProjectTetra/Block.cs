@@ -20,6 +20,7 @@ namespace ProjectTetra
         public int dx, dy;
         public double x_base, y_base;
         public bool flagged;
+
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
         {
             t2d = game.Content.Load<Texture2D>("blackpixel");
@@ -28,6 +29,7 @@ namespace ProjectTetra
             y_base = y * Variables.blockHP;
             dy = 0; dx = 0;
         }
+
         public override void init()
         {
         }
@@ -48,6 +50,13 @@ namespace ProjectTetra
             flagged = false;
             isEmpty = true;
             color = new Color(0, 0, 0);
+        }
+
+        public void create(Color color)
+        {
+            flagged = false;
+            isEmpty = false;
+            this.color = color;
         }
 
         public void setDX(int dx)
