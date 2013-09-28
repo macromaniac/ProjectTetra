@@ -21,6 +21,27 @@ namespace ProjectTetra
         int solid_count;
         Random random = new Random();
 
+        public bool isMovableSpace(int x, int y, Variables.direction dir)
+        {
+            if(dir==Variables.direction.North)
+                return isMovableSpace(x,y+1,0,1);
+            if(dir==Variables.direction.South)
+                return isMovableSpace(x,y-1,0,-1);
+            if(dir==Variables.direction.East)
+                return isMovableSpace(x+1,y,1,0);
+            //west
+            return isMovableSpace(x-1,y,-1,0);
+        }
+        public bool isMovableSpace(int x, int y, int dx, int dy)
+        {
+            if(x>board.GetLength(0) || x<0)
+                return false;
+            if (y > board.GetLength(1) || y < 0)
+                return false;
+            if (board[x, y].isEmpty)
+                return true;
+            return isMovableSpace(x+dx, y+dy,dx,dy);
+        }
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
         }
@@ -46,8 +67,9 @@ namespace ProjectTetra
                 }
             }
             solid_count = 0;
-            ((RegularBlock)(board[1, 1])).wakeUp( new Color(0,0,0));
-            ((RegularBlock)(board[1, 2])).wakeUp( new Color(100,0,0));
+            ((RegularBlock)(board[0, 1])).wakeUp( new Color(0,0,0));
+            ((RegularBlock)(board[0, 0])).wakeUp( new Color(0,0,0));
+            ((RegularBlock)(board[0, 2])).wakeUp( new Color(100,0,0));
         }
         public override void draw(GameTime gameTime)
         {
