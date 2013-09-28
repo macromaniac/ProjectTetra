@@ -15,7 +15,7 @@ namespace ProjectTetra
 {
     public static class Variables
     {
-        public enum direction {North, East, South, West};
+        public enum direction {North, East, South, West, Nowhere};
         public static double gridStartX = .2;
         public static double blockW = .25;
         public static double blockH = .15;
@@ -34,5 +34,11 @@ namespace ProjectTetra
         }
         public static int blockWP = getX(blockW);
         public static int blockHP = getY(blockH);
+        public static double clipNumber(double toClip)
+        {
+            if (toClip < 0)
+                return 0;
+            return toClip;
+        }
     }
 }

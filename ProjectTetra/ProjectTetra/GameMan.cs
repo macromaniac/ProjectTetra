@@ -40,6 +40,9 @@ double leftEdgeDistP;
 double rightEdgeDistP;
 double topEdgeDistP;
      double bottomEdgeDistP;
+
+
+
         public Variables.direction getClosestAvailableDirection(int curY, int curX, int bX, int bY)
         {
             //check the directions that are available, if a direction is
@@ -56,15 +59,31 @@ double topEdgeDistP;
            rightEdgeDistP = ((double)(curX - ybase)) / (double)(rightEdgeP - ybase);
            topEdgeDistP = ((double)(xbase-curY)) / (double)( xbase - topEdgeP);
            bottomEdgeDistP = ((double)(curY-xbase)) / (double)(bottomEdgeP-xbase);
-           double[] dists = new double[4] { topEdgeDistP, rightEdgeDistP, bottomEdgeDistP, leftEdgeDistP};
+
+           double[] dists = new double[4] 
+           { Variables.clipNumber(topEdgeDistP) ,
+            Variables.clipNumber(rightEdgeDistP),
+            Variables.clipNumber(bottomEdgeDistP), 
+            Variables.clipNumber(leftEdgeDistP)};
+           //Debug.WriteLine( dists[0].ToString() + " E: " + dists[1].ToString() + " S: " + dists[2].ToString() + " W: " + dists[3].ToString());
+           //Debug.WriteLine(dists[2]);
            double max = -100;
-           int maxd = 0;
+           int maxd = -1;
             for(int i=0;i<dists.Length;++i)
                 if (dists[i] > max)
                 {
-                    max = dists[i];
-                    maxd = i;
+                    if (level.grid.isMovableSpace(bX, bY, (Variables.direction)i))
+                    {
+                        max = dists[i];
+                        maxd = i;
+                    }
                 }
+            if(maxd<0)
+               return Variables.direction.Nowhere;
+            if ((Variables.direction)maxd == Variables.direction.West)
+                Debug.WriteLine(max);
+            if ((Variables.direction)maxd == Variables.direction.South)
+                Debug.WriteLine(max);
             return (Variables.direction)maxd;
         }
         private void moveBlock(int bX, int bY, Variables.direction dir)
@@ -73,17 +92,15 @@ double topEdgeDistP;
         }
         private bool setPos(int curY, int curX, int bX, int bY)
         {
-                   Debug.WriteLine( leftEdgeDistP.ToString() +" " + rightEdgeDistP.ToString());
             bool didMove = false;
             Variables.direction dir = getClosestAvailableDirection(curY, curX, bX, bY);
-            //Debug.WriteLine((int)dir);
+            if (dir == Variables.direction.Nowhere)
+                return false;
             //This is sloppy, it uses variables set in the backgruond by getClosestAvailDir, running out of time X_X
             if (dir == Variables.direction.North)
             {
                 if (topEdgeDistP >= 1)
                 {
-                   Debug.WriteLine(bX.ToString() + " " + bY.ToString());
-                   Debug.WriteLine("moving north");
                     moveBlock(bX, bY, Variables.direction.North);
                     //update the touch coordinates!
                     //ybBase = bY + 1;
@@ -94,15 +111,13 @@ double topEdgeDistP;
                 else
                 {
                     level.grid.board[bX, bY].setDY(0);
-                    level.grid.board[bX, bY].setDX(  (int)(Variables.blockHP * topEdgeDistP));
+                    level.grid.board[bX, bY].setDX(  (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.South)
             {
                 if (bottomEdgeDistP >= 1)
                 {
-                   Debug.WriteLine(bX.ToString() + " " + bY.ToString());
-                   Debug.WriteLine("moving south");
                     moveBlock(bX, bY, Variables.direction.South);
                     //update the touch coordinates!
                     //ybBase = bY - 1;
@@ -113,18 +128,14 @@ double topEdgeDistP;
                 }
                 else
                 {
-                   //Debug.WriteLine("moving south");
                     level.grid.board[bX, bY].setDY(0);
-                    level.grid.board[bX, bY].setDX(-(int)(Variables.blockHP * bottomEdgeDistP));
-                    //Debug.WriteLine(-(int)(Variables.blockHP * bottomEdgeDistP));
+                    level.grid.board[bX, bY].setDX(-(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.East)
             {
                 if (rightEdgeDistP >= 1)
                 {
-                   Debug.WriteLine(bX.ToString() + " " + bY.ToString());
-                   Debug.WriteLine("moving east");
                     moveBlock(bX, bY, Variables.direction.East);
                     //update the touch coordinates!
                     //xbBase = bX - 1;
@@ -135,7 +146,7 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * rightEdgeDistP));
+                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
                     level.grid.board[bX, bY].setDX(0);
                 }
             }
@@ -145,8 +156,6 @@ double topEdgeDistP;
             {
                 if (leftEdgeDistP >= 1)
                 {
-                    Debug.WriteLine(bX.ToString() + " " + bY.ToString());
-                    Debug.WriteLine("moving west");
                     moveBlock(bX, bY, Variables.direction.West);
                     //update the touch coordinates!
                     //xbBase = bX - 1;
@@ -157,7 +166,7 @@ double topEdgeDistP;
                 }
                 else
                 {
-                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * -leftEdgeDistP));
+                    level.grid.board[bX, bY].setDY((int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
                     level.grid.board[bX, bY].setDX(0);
                 }
             }

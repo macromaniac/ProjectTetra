@@ -54,6 +54,7 @@ namespace ProjectTetra
 
         public void setDX(int dx)
         {
+            
             this.dx = dx;
         }
         public void setDY(int dy)

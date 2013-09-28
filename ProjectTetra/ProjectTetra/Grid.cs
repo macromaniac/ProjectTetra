@@ -26,8 +26,32 @@ namespace ProjectTetra
         int slow_factor = 10;
         int spawn_buffer = 160;
 
+        public bool isMovableSpace(int x, int y, Variables.direction dir)
+        {
+            if (dir == Variables.direction.North)
+                return isMovableSpace(x, y + 1, 0, 1);
+            if (dir == Variables.direction.South)
+                return isMovableSpace(x, y - 1, 0, -1);
+            if (dir == Variables.direction.East)
+                return isMovableSpace(x + 1, y, 1, 0);
+            //west
+            return isMovableSpace(x - 1, y, -1, 0);
+        }
+
+        public bool isMovableSpace(int x, int y, int dx, int dy)
+        {
+            if (x >= board.GetLength(0) || x < 0)
+                return false;
+            if (y >= board.GetLength(1) || y < 0)
+                return false;
+            if (board[x, y].isEmpty)
+                return true;
+            return isMovableSpace(x + dx, y + dy, dx, dy);
+        }
+
         public Grid(Game game, SpriteBatch spriteBatch) : base(game,spriteBatch)
         {
+
         }
         public void resetGridDXY()
         {
