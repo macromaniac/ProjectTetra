@@ -24,7 +24,7 @@ namespace ProjectTetra
 
         bool stop = false;
         int slow_factor = 10;
-        int spawn_buffer =50;
+        int spawn_buffer =0;
 
         public bool isMovableSpace(int x, int y, Variables.direction dir)
         {
@@ -55,7 +55,48 @@ namespace ProjectTetra
                 }
 
             }
+            if (dir == Variables.direction.South)
+            {
+                if (validY(bY - 1) && !board[bX, bY - 1].isEmpty)
+                {
+                    oldBlock.changeXY(bX, bY - 1);
+                    moveGridSpace(bX, bY - 1, dir, oldBlock);
+                }
+                if (validY(bY - 1) && board[bX, bY - 1].isEmpty)
+                {
+                    oldBlock.changeXY(bX, bY - 1);
+                    board[bX, bY - 1] = oldBlock;
+                }
 
+            }
+
+            if (dir == Variables.direction.East)
+            {
+                if (validX(bX) && !board[bX+1, bY ].isEmpty)
+                {
+                    oldBlock.changeXY(bX+1, bY );
+                    moveGridSpace(bX+1, bY , dir, oldBlock);
+                }
+                if (validX(bX +1) && board[bX +1, bY].isEmpty)
+                {
+                    oldBlock.changeXY(bX+1, bY);
+                    board[bX+1, bY] = oldBlock;
+                }
+            }
+
+            if (dir == Variables.direction.West)
+            {
+                if (validX(bX) && !board[bX - 1, bY].isEmpty)
+                {
+                    oldBlock.changeXY(bX - 1, bY);
+                    moveGridSpace(bX - 1, bY, dir, oldBlock);
+                }
+                if (validX(bX - 1) && board[bX - 1, bY].isEmpty)
+                {
+                    oldBlock.changeXY(bX - 1, bY);
+                    board[bX - 1, bY] = oldBlock;
+                }
+            }
         }
         public bool isMovableSpace(int x, int y, int dx, int dy)
         {
@@ -137,11 +178,10 @@ namespace ProjectTetra
                     board[i, j] = new RegularBlock(game, spriteBatch, i,j);
                 }
             }
-            ((RegularBlock)(board[0, 1])).wakeUp(new Color(0, 0, 0));
-            ((RegularBlock)(board[0, 0])).wakeUp(new Color(0, 0, 0));
-            ((RegularBlock)(board[0, 2])).wakeUp(new Color(100, 0, 0));
+
             solid_count = 0;
         }
+
         public override void draw(GameTime gameTime)
         {
             for (int x = 0; x < Variables.numBlocksX; ++x)
@@ -244,7 +284,7 @@ namespace ProjectTetra
                     }
                 }
             }
-            return pointGather();
+            return pointGather()*500;
         }
 
         //Returns the deserved points and destroys flagged blocks
@@ -265,6 +305,7 @@ namespace ProjectTetra
                 }
             }
             solid_count -= broken;
+            if (broken == 0) return 0;
             return (int) Math.Pow(2.0, broken);
         }
 
@@ -286,8 +327,9 @@ namespace ProjectTetra
             {
                 for (int j = -1; j <= 1; ++j)
                 {
-                    if (safeGetBlock(x+i, y+j).color == color && (i != 0 ) && ((i == 0) || (j == 0)))
+                    if (safeGetBlock(x+i, y+j).color == color && (i != j ) && ((i == 0) || (j == 0)))
                     {
+                        Debug.WriteLine(color);
                         return true;
                     }
                 }
@@ -302,7 +344,6 @@ namespace ProjectTetra
             int y = random.Next(0, (int)Variables.numBlocksY);
             
             RegularBlock new_block;
-
 
             if (board[x, y].isEmpty)
             {
@@ -327,6 +368,15 @@ namespace ProjectTetra
             }
         }
         
+        public void die()
+        {
+            stop = true;
+        }
+
+        public bool getStop()
+        {
+            return stop;
+        }
 
     }
 }
