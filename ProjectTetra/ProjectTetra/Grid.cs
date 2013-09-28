@@ -24,7 +24,7 @@ namespace ProjectTetra
 
         bool stop = false;
         int slow_factor = 10;
-        int spawn_buffer =50;
+        int spawn_buffer =0;
 
         public bool isMovableSpace(int x, int y, Variables.direction dir)
         {
@@ -304,7 +304,16 @@ namespace ProjectTetra
                 spawnBlock();
             }
         }
-        
+
+        public void die()
+        {
+            stop = true;
+        }
+
+        public bool getStop()
+        {
+            return stop;
+        }
 
     }
 }

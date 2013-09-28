@@ -33,16 +33,29 @@ namespace ProjectTetra
         public override void draw(GameTime gameTime)
         {
             grid.draw(gameTime);
-            spriteBatch.DrawString(game.Content.Load<SpriteFont>("SpriteFont1"), "Life: " + life + " Points: " + points, new Vector2(
+            spriteBatch.DrawString(game.Content.Load<SpriteFont>("SpriteFont1"), "Life: " + life + "    Points: " + points, new Vector2(
                 (float)((double)game.GraphicsDevice.Viewport.Width * 0.95), (float) ((double) game.GraphicsDevice.Viewport.Height * 0.80)), 
-                Color.GhostWhite, -1.571f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                Color.GhostWhite, -1.571f, new Vector2(1.2f, 1.2f), 1f, SpriteEffects.None, 0f);
         }
         public override void update(GameTime gameTime)
         {
-            grid.update(gameTime);
-            life += grid.checkBlocks();
-            life-=point_bleed;
-            points += point_bleed;
+            if (!grid.getStop())
+            {
+                grid.update(gameTime);
+                life += grid.checkBlocks();
+                life -= point_bleed;
+                points += point_bleed;
+                if (life <= 0)
+                {
+                    grid.die();
+                }
+            }
+            else
+            {
+                life = 0;
+            }
+
+            
         }
     }
 }

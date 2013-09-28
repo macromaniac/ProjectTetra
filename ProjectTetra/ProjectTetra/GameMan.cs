@@ -36,10 +36,10 @@ namespace ProjectTetra
         {;
             level.draw(gameTime);
         }
-double leftEdgeDistP;
-double rightEdgeDistP;
-double topEdgeDistP;
-     double bottomEdgeDistP;
+        double leftEdgeDistP;
+        double rightEdgeDistP;
+        double topEdgeDistP;
+        double bottomEdgeDistP;
 
 
 
