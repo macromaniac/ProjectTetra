@@ -24,7 +24,7 @@ namespace ProjectTetra
 
         bool stop = false;
         int slow_factor = 10;
-        int spawn_buffer =0;
+        int spawn_buffer =140;
 
         public bool isMovableSpace(int x, int y, Variables.direction dir)
         {
@@ -329,7 +329,6 @@ namespace ProjectTetra
                 {
                     if (safeGetBlock(x+i, y+j).color == color && (i != j ) && ((i == 0) || (j == 0)))
                     {
-                        Debug.WriteLine(color);
                         return true;
                     }
                 }
