@@ -19,9 +19,11 @@ namespace ProjectTetra
         public bool isEmpty;
         public int dx, dy;
         public double x_base, y_base;
+        public bool flagged;
         public Block(Game game, SpriteBatch spriteBatch, int x, int y) : base(game,spriteBatch)
         {
             t2d = game.Content.Load<Texture2D>("blackpixel");
+            flagged = false;
             isEmpty = true;
             color = new Color(0, 0, 0);
             x_base = x * Variables.blockWP;
