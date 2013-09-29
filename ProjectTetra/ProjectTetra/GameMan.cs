@@ -42,7 +42,11 @@ namespace ProjectTetra
         double bottomEdgeDistP;
 
 
-
+        // This function finds direction the users movement is heading in by 
+        // taking the % of the distance the finger has traveled towards an edge
+        // relative to where the finger was first pressed. This allows the user 
+        // to move blocks with minimal effort.
+        
         public Variables.direction getClosestAvailableDirection(int curY, int curX, int bX, int bY)
         {
             //check the directions that are available, if a direction is
@@ -65,10 +69,10 @@ namespace ProjectTetra
             Variables.clipNumber(rightEdgeDistP),
             Variables.clipNumber(bottomEdgeDistP), 
             Variables.clipNumber(leftEdgeDistP)};
-           //Debug.WriteLine( dists[0].ToString() + " E: " + dists[1].ToString() + " S: " + dists[2].ToString() + " W: " + dists[3].ToString());
-           //Debug.WriteLine(dists[2]);
+
            double max = -100;
            int maxd = -1;
+           
             for(int i=0;i<dists.Length;++i)
                 if (dists[i] > max)
                 {
@@ -78,12 +82,10 @@ namespace ProjectTetra
                         maxd = i;
                     }
                 }
+                
             if(maxd<0)
                return Variables.direction.Nowhere;
-            if ((Variables.direction)maxd == Variables.direction.West)
-                Debug.WriteLine(max);
-            if ((Variables.direction)maxd == Variables.direction.South)
-                Debug.WriteLine(max);
+
             return (Variables.direction)maxd;
         }
         private void moveBlock(int bX, int bY, Variables.direction dir)
@@ -92,10 +94,6 @@ namespace ProjectTetra
             level.grid.moveGridSpace(bX, bY, dir, new RegularBlock(game, spriteBatch, bX, bY));
         }
 
-        public void setDYDX(int bX, int bY, int dY, int dX)
-        {
-
-        }
         private void resetBase()
         {
             TouchCollection tc = TouchPanel.GetState();
@@ -125,18 +123,12 @@ namespace ProjectTetra
                 if (topEdgeDistP >= 1)
                 {
                     moveBlock(bX, bY, Variables.direction.North);
-                    //update the touch coordinates!
-                    //ybBase = bY + 1;
-                    //xbase = curX;
-                    //ybase = curY;
                     resetBase();
                     didMove = true;
                 }
                 else
                 {
                     level.grid.moveSpace(bX,bY, (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)), 0);
-                   // level.grid.board[bX, bY].setDY(0);
-                    //level.grid.board[bX, bY].setDX(  (int)(Variables.blockHP * Variables.clipNumber(topEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.South)
@@ -144,19 +136,12 @@ namespace ProjectTetra
                 if (bottomEdgeDistP >= 1)
                 {
                     moveBlock(bX, bY, Variables.direction.South);
-                    //update the touch coordinates!
-                    //ybBase = bY - 1;
-                    //xbase = curX;
-                    //ybase = curY;
                     resetBase();
                     didMove = true;
-
                 }
                 else
                 {
                     level.grid.moveSpace(bX, bY, -(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)), 0);
-                    //level.grid.board[bX, bY].setDY(0);
-                    //level.grid.board[bX, bY].setDX(-(int)(Variables.blockHP * Variables.clipNumber(bottomEdgeDistP)));
                 }
             }
             if (dir == Variables.direction.East)
@@ -164,10 +149,6 @@ namespace ProjectTetra
                 if (rightEdgeDistP >= 1)
                 {
                     moveBlock(bX, bY, Variables.direction.East);
-                    //update the touch coordinates!
-                    //xbBase = bX - 1;
-                    //xbase = curX;
-                    //ybase = curY;
                     resetBase();
                     didMove = true;
 
@@ -175,8 +156,6 @@ namespace ProjectTetra
                 else
                 {
                     level.grid.moveSpace(bX, bY, 0, (int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
-                    //level.grid.board[bX, bY].setDY((int)(Variables.blockWP * Variables.clipNumber(rightEdgeDistP)));
-                    //level.grid.board[bX, bY].setDX(0);
                 }
             }
 
@@ -186,10 +165,6 @@ namespace ProjectTetra
                 if (leftEdgeDistP >= 1)
                 {
                     moveBlock(bX, bY, Variables.direction.West);
-                    //update the touch coordinates!
-                    //xbBase = bX - 1;
-                    //xbase = curX;
-                    //ybase = curY;
                     resetBase();
                     didMove = true;
 
@@ -197,8 +172,6 @@ namespace ProjectTetra
                 else
                 {
                     level.grid.moveSpace(bX, bY, 0, (int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
-                    //level.grid.board[bX, bY].setDY((int)(Variables.blockWP * -Variables.clipNumber(leftEdgeDistP)));
-                    //level.grid.board[bX, bY].setDX(0);
                 }
             }
 
@@ -224,11 +197,7 @@ namespace ProjectTetra
                     ybBase = touchYB;
                     isTouched = true;
                 }
-                if ( touchYB< (Variables.numBlocksY) && touchXB<(Variables.numBlocksX))
-                {
-                   // level.grid.board[xbBase, ybBase].setDX((int)(touchX-xbase));
-                   // level.grid.board[xbBase, ybBase].setDY((int)(touchY-ybase));
-                }
+                
                 setPos((int)touchX, (int)touchY, xbBase, ybBase);
             }
             else
