@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
+//We didn't have time to implement a menu, tragically
+
 namespace ProjectTetra 
 {
     class Menu : Drawer
